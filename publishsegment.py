@@ -66,9 +66,9 @@ def pcl_callback(pcl_msg):
     # Much like the previous filters, we start by creating a filter object: 
     outlier_filter = cloud_filtered.make_statistical_outlier_filter()
     # Set the number of neighboring points to analyze for any given point
-    outlier_filter.set_mean_k(50)
+    outlier_filter.set_mean_k(10)
     # Set threshold scale factor
-    x = 1.0
+    x = 0.8
     # Any point with a mean distance larger than global (mean distance+x*std_dev) will be considered outlier
     outlier_filter.set_std_dev_mul_thresh(x)
     # Finally call the filter function for magic
@@ -78,8 +78,8 @@ def pcl_callback(pcl_msg):
     passthrough = cloud_filtered.make_passthrough_filter()
     filter_axis = 'z'
     passthrough.set_filter_field_name(filter_axis)
-    axis_min = 0.75
-    axis_max = 1.4
+    axis_min = 0.1
+    axis_max = 2.0
     passthrough.set_filter_limits(axis_min, axis_max)
     cloud_filtered = passthrough.filter()
     filename = 'pass_through_filtered.pcd'
